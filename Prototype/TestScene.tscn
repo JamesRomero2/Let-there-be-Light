@@ -1,0 +1,123 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Prototype/PlayerMovement.gd" type="Script" id=2]
+[ext_resource path="res://Prototype/SpikyPlatform.gd" type="Script" id=3]
+[ext_resource path="res://Prototype/PlatformScript.gd" type="Script" id=4]
+[ext_resource path="res://assets/png files/player.png" type="Texture" id=5]
+[ext_resource path="res://assets/png files/Battery.png" type="Texture" id=6]
+[ext_resource path="res://GameObjects/Player.tscn" type="PackedScene" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 22.8572, 29.7143 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 356.572, 18.7143 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 43.6428, 17.3571 )
+
+[node name="Icon" type="Node2D"]
+position = Vector2( 32, 272 )
+scale = Vector2( 0.21875, 0.21875 )
+
+[node name="Player" type="KinematicBody2D" parent="."]
+visible = false
+position = Vector2( -82.2857, -941.714 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 0, 2.28577 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Player"]
+texture = ExtResource( 5 )
+
+[node name="Platform" type="StaticBody2D" parent="."]
+position = Vector2( 260.572, -1042.29 )
+script = ExtResource( 4 )
+
+[node name="PlatformSprite" type="Sprite" parent="Platform"]
+visible = false
+position = Vector2( 256, 73.1428 )
+scale = Vector2( 12.5714, 0.571427 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+position = Vector2( 256, 72.7144 )
+shape = SubResource( 2 )
+
+[node name="Timer" type="Timer" parent="Platform"]
+wait_time = 2.0
+one_shot = true
+
+[node name="Platform2" type="StaticBody2D" parent="."]
+position = Vector2( -27.4286, -960 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="PlatformSprite" type="Sprite" parent="Platform2"]
+position = Vector2( 256, 73.1428 )
+scale = Vector2( 12.5714, 0.571427 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2"]
+position = Vector2( 256, 72.7144 )
+shape = SubResource( 2 )
+
+[node name="Spiky Platform" type="Area2D" parent="."]
+position = Vector2( 233.143, -978.286 )
+script = ExtResource( 3 )
+
+[node name="Platform" type="Sprite" parent="Spiky Platform"]
+position = Vector2( 646.857, 233.143 )
+scale = Vector2( 1.35713, 0.571427 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spiky Platform"]
+position = Vector2( 647.072, 234.071 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2( 1348.57, -164.571 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Platform" type="Sprite" parent="StaticBody2D3"]
+position = Vector2( 210.286, 73.1428 )
+scale = Vector2( 11.1428, 0.571427 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2( 210.286, 72.7145 )
+shape = SubResource( 2 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2( 54.8572, -201.143 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Platform" type="Sprite" parent="StaticBody2D2"]
+position = Vector2( 256, 73.1428 )
+scale = Vector2( 12.5714, 0.571427 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2( 256, 72.7144 )
+shape = SubResource( 2 )
+
+[node name="Battery" type="Sprite" parent="."]
+position = Vector2( 91.4286, -960 )
+texture = ExtResource( 6 )
+
+[node name="Player2" parent="." instance=ExtResource( 7 )]
+
+[connection signal="flash_light" from="Player" to="Platform" method="_on_Player_flash_light"]
+[connection signal="timeout" from="Platform/Timer" to="Platform" method="_on_Timer_timeout"]
+[connection signal="body_entered" from="Spiky Platform" to="Player" method="_on_Spiky_Platform_body_entered"]
