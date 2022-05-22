@@ -10,3 +10,7 @@ func emit_light() -> void:
 
 func _on_Player_flash_light():
 	emit_light()
+
+
+func _on_Player_empty_player_health():
+	pass # Replace with function body.

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/West Bad - Jeremy Black.mp3-2ca7bc4d21b014a7f3024371cc9d9e82.mp3str"
+
+[deps]
+
+source_file="res://assets/audio files/Music/West Bad - Jeremy Black.mp3"
+dest_files=[ "res://.import/West Bad - Jeremy Black.mp3-2ca7bc4d21b014a7f3024371cc9d9e82.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

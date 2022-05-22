@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/mactonite_-_The_Dark_Corridor_1.mp3-9160d594f5a53742358f1334e7fba3aa.mp3str"
+
+[deps]
+
+source_file="res://assets/audio files/Music/mactonite_-_The_Dark_Corridor_1.mp3"
+dest_files=[ "res://.import/mactonite_-_The_Dark_Corridor_1.mp3-9160d594f5a53742358f1334e7fba3aa.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

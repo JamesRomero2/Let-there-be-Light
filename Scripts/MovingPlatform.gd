@@ -17,7 +17,7 @@ func _ready() -> void :
 	if ! Engine.is_editor_hint():
 		set_tween(move_from, move_to)
 
-func _physics_process(delta) -> void:
+func _physics_process(_delta) -> void:
 	if Engine.is_editor_hint():
 		update()
 
@@ -30,7 +30,7 @@ func set_tween(from, to) -> void :
 	tween.interpolate_property(base, "position", from, to, duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 
-func _on_Tween_tween_completed(object, key):
+func _on_Tween_tween_completed(_object, _key):
 	if direction_forward: 
 		set_tween(move_from, move_to)
 	else:

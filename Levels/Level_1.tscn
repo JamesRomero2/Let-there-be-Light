@@ -1,11 +1,17 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://GameObjects/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/png files/Background.png" type="Texture" id=2]
 [ext_resource path="res://GameObjects/Platform.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GameObjects/Portal.tscn" type="PackedScene" id=4]
-[ext_resource path="res://UI/PlayerStatsUI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Levels/GameOverScreen.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Levels/Level_2.tscn" type="PackedScene" id=6]
 [ext_resource path="res://GameObjects/Light.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Levels/PauseScreen.tscn" type="PackedScene" id=8]
+[ext_resource path="res://GameObjects/PlayerStats.tscn" type="PackedScene" id=9]
+
+[sub_resource type="CanvasItemMaterial" id=10]
+light_mode = 2
 
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 506, 18 )
@@ -13,20 +19,22 @@ extents = Vector2( 506, 18 )
 [node name="Level 1" type="Node2D"]
 
 [node name="Background" type="TextureRect" parent="."]
+material = SubResource( 10 )
 margin_right = 480.0
 margin_bottom = 320.0
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 2
 
+[node name="Light" parent="Background" instance=ExtResource( 7 )]
+position = Vector2( 455, 78 )
+
 [node name="Platform" parent="." instance=ExtResource( 3 )]
 tile_data = PoolIntArray( 458779, 0, 0, 458780, 0, 4, 458781, 0, 5, 589847, 0, 0, 589848, 0, 3, 589849, 0, 5, 720896, 0, 0, 720897, 0, 2, 720898, 0, 2, 720899, 0, 2, 720900, 0, 3, 720901, 0, 2, 720902, 0, 3, 720903, 0, 5, 720906, 0, 0, 720907, 0, 1, 720908, 0, 5, 720915, 0, 0, 720916, 0, 3, 720917, 0, 5, 851983, 0, 0, 851984, 0, 4, 851985, 0, 5 )
 
-[node name="Portal" parent="." instance=ExtResource( 4 )]
-position = Vector2( 456, 91 )
+[node name="PauseScreen" parent="." instance=ExtResource( 8 )]
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 15, 153 )
+[node name="PlayerStats" parent="." instance=ExtResource( 9 )]
 
 [node name="DeathArea" type="Area2D" parent="."]
 position = Vector2( 10, 332 )
@@ -38,11 +46,18 @@ __meta__ = {
 position = Vector2( 215, 15 )
 shape = SubResource( 9 )
 
-[node name="PlayerStatsUI" parent="." instance=ExtResource( 6 )]
+[node name="Portal" parent="." instance=ExtResource( 4 )]
+position = Vector2( 456, 88 )
+target_scene = ExtResource( 6 )
 
-[node name="Light" parent="." instance=ExtResource( 7 )]
-position = Vector2( 455, 72 )
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 15, 153 )
 
-[connection signal="update_flash_light_battery" from="Player" to="PlayerStatsUI" method="_on_Player_update_flash_light_battery"]
-[connection signal="update_player_health" from="Player" to="PlayerStatsUI" method="_on_Player_update_player_health"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameOverScreen" parent="CanvasLayer" instance=ExtResource( 5 )]
+
 [connection signal="body_entered" from="DeathArea" to="Player" method="_on_player_fall_death"]
+[connection signal="empty_player_health" from="Player" to="CanvasLayer/GameOverScreen" method="_on_Player_empty_player_health"]
+[connection signal="update_flash_light_battery" from="Player" to="PlayerStats" method="_on_Player_update_flash_light_battery"]
+[connection signal="update_player_health" from="Player" to="PlayerStats" method="_on_Player_update_player_health"]
